@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shopping.shoppingmall.homepage.dao.IntroduceMapper" >
+  <resultMap id="BaseResultMap" type="com.shopping.shoppingmall.homepage.entity.Introduce" >
+    <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="slid" property="slid" jdbcType="INTEGER" />
+    <result column="ptype" property="ptype" jdbcType="VARCHAR" />
+    <result column="scale" property="scale" jdbcType="INTEGER" />
+    <result column="nature" property="nature" jdbcType="VARCHAR" />
+    <result column="citydistrict" property="citydistrict" jdbcType="VARCHAR" />
+    <result column="particulars" property="particulars" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pid, slid, ptype, scale, nature, citydistrict, particulars
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from introduce
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from introduce
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shopping.shoppingmall.homepage.entity.Introduce" >
+    insert into introduce (pid, slid, ptype, 
+      scale, nature, citydistrict, 
+      particulars)
+    values (#{pid,jdbcType=INTEGER}, #{slid,jdbcType=INTEGER}, #{ptype,jdbcType=VARCHAR}, 
+      #{scale,jdbcType=INTEGER}, #{nature,jdbcType=VARCHAR}, #{citydistrict,jdbcType=VARCHAR}, 
+      #{particulars,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shopping.shoppingmall.homepage.entity.Introduce" >
+    insert into introduce
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="slid != null" >
+        slid,
+      </if>
+      <if test="ptype != null" >
+        ptype,
+      </if>
+      <if test="scale != null" >
+        scale,
+      </if>
+      <if test="nature != null" >
+        nature,
+      </if>
+      <if test="citydistrict != null" >
+        citydistrict,
+      </if>
+      <if test="particulars != null" >
+        particulars,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="slid != null" >
+        #{slid,jdbcType=INTEGER},
+      </if>
+      <if test="ptype != null" >
+        #{ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null" >
+        #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="nature != null" >
+        #{nature,jdbcType=VARCHAR},
+      </if>
+      <if test="citydistrict != null" >
+        #{citydistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="particulars != null" >
+        #{particulars,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopping.shoppingmall.homepage.entity.Introduce" >
+    update introduce
+    <set >
+      <if test="slid != null" >
+        slid = #{slid,jdbcType=INTEGER},
+      </if>
+      <if test="ptype != null" >
+        ptype = #{ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null" >
+        scale = #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="nature != null" >
+        nature = #{nature,jdbcType=VARCHAR},
+      </if>
+      <if test="citydistrict != null" >
+        citydistrict = #{citydistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="particulars != null" >
+        particulars = #{particulars,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shopping.shoppingmall.homepage.entity.Introduce" >
+    update introduce
+    set slid = #{slid,jdbcType=INTEGER},
+      ptype = #{ptype,jdbcType=VARCHAR},
+      scale = #{scale,jdbcType=INTEGER},
+      nature = #{nature,jdbcType=VARCHAR},
+      citydistrict = #{citydistrict,jdbcType=VARCHAR},
+      particulars = #{particulars,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

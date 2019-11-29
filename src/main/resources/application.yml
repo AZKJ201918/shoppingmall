@@ -1,0 +1,57 @@
+spring:
+  profiles:
+    active: dev
+
+
+---
+server:
+  port: 555
+#  ssl:
+#    key-store: classpath:2098258_www.azkjedu.club.pfx
+#    key-store-password: wElwyOu0
+
+
+  ssl:
+    key-store: classpath:1633682_wxpay.chazhanyuan.cn.pfx
+    key-store-password: L0z5C0vu
+spring:
+  profiles: dev
+  transaction:
+    rollback-on-commit-failure: true
+
+
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+---
+
+#logging:
+#  level:
+#    com.shopping.shoppingmall.**.dao : debug
+
+#   activemq:
+#     broker-url: tcp://193.112.60.165:61616
+#     pool:
+#       enabled: false
+
+
+netty:
+  port: 7000
+  url: 127.0.0.1
+
+
+
+spring:
+  redis:
+    database: 0
+    host: 193.112.60.165
+  cache:
+    type: redis
+    ehcache:
+      config: classpath:ehcache.xml
+  data:
+    solr:
+      host: http://193.112.60.165:8983/solr/test3
+    mongodb:
+      uri: mongodb://106.14.195.35:27017/coordinate

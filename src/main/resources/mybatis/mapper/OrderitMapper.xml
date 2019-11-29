@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shopping.shoppingmall.orderit.dao.OrderitMapper" >
+  <resultMap id="BaseResultMap" type="com.shopping.shoppingmall.orderit.entity.Orderit" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="orderid" property="orderid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="allprice" property="allprice" jdbcType="INTEGER" />
+    <result column="couponid" property="couponid" jdbcType="INTEGER" />
+    <result column="zzprice" property="zzprice" jdbcType="REAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="postage" property="postage" jdbcType="INTEGER" />
+    <result column="adressid" property="adressid" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="key_sign" property="keySign" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="closetime" property="closetime" jdbcType="TIMESTAMP" />
+    <result column="sendtime" property="sendtime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="couriernum" property="couriernum" jdbcType="VARCHAR" />
+    <result column="couriername" property="couriername" jdbcType="VARCHAR" />
+    <result column="otype" property="otype" jdbcType="INTEGER" />
+    <collection property="adress" resultMap="AaseResultMap"></collection>
+    <collection property="coupon" resultMap="COaseResultMap"></collection>
+  </resultMap>
+
+
+
+  <resultMap id="AaseResultMap" type="com.shopping.shoppingmall.user.entity.Adress">
+    <id column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="detailed" jdbcType="VARCHAR" property="detailed" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+
+
+  <resultMap id="COaseResultMap" type="com.shopping.shoppingmall.user.entity.Coupon" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="ctype" property="ctype" jdbcType="INTEGER" />
+    <result column="full_money" property="fullMoney" jdbcType="INTEGER" />
+    <result column="threshold_money" property="thresholdMoney" jdbcType="INTEGER" />
+    <result column="sale" property="sale" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="DATE" />
+    <result column="end_time" property="endTime" jdbcType="DATE" />
+    <result column="howmany" property="howmany" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, orderid, uid, allprice, couponid, zzprice, status, postage, adressid, remark, 
+    key_sign, createtime, closetime, sendtime, end_time, couriernum, couriername,otype
+  </sql>
+
+
+  <select id="SelectOrderDetails" resultMap="BaseResultMap">
+SELECT * FROM orderit o
+INNER JOIN adress a ON o.adressid=a.aid
+LEFT JOIN coupon c ON o.couponid=c.cid
+WHERE o.id=#{id} AND o.uid=#{uid}
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderit
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shopping.shoppingmall.orderit.entity.Orderit" >
+    insert into orderit (id, orderid, uid, 
+      allprice, couponid, zzprice, 
+      status, postage, adressid, 
+      remark, key_sign, createtime, 
+      closetime, sendtime, end_time, 
+      couriernum, couriername,otype)
+    values (#{id,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, 
+      #{allprice,jdbcType=INTEGER}, #{couponid,jdbcType=INTEGER}, #{zzprice,jdbcType=REAL},
+      #{status,jdbcType=INTEGER}, #{postage,jdbcType=INTEGER}, #{adressid,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{keySign,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{closetime,jdbcType=TIMESTAMP}, #{sendtime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{couriernum,jdbcType=VARCHAR}, #{couriername,jdbcType=VARCHAR}),(#{otype,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertSelective" parameterType="com.shopping.shoppingmall.orderit.entity.Orderit" useGeneratedKeys="true" keyProperty="id" >
+    insert into orderit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderid != null" >
+        orderid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="allprice != null" >
+        allprice,
+      </if>
+      <if test="couponid != null" >
+        couponid,
+      </if>
+      <if test="zzprice != null" >
+        zzprice,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="postage != null" >
+        postage,
+      </if>
+      <if test="adressid != null" >
+        adressid,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="keySign != null" >
+        key_sign,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="closetime != null" >
+        closetime,
+      </if>
+      <if test="sendtime != null" >
+        sendtime,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="couriernum != null" >
+        couriernum,
+      </if>
+      <if test="couriername != null" >
+        couriername,
+      </if>
+      <if test="otype != null" >
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="allprice != null" >
+        #{allprice,jdbcType=INTEGER},
+      </if>
+      <if test="couponid != null" >
+        #{couponid,jdbcType=INTEGER},
+      </if>
+      <if test="zzprice != null" >
+        #{zzprice,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postage != null" >
+        #{postage,jdbcType=INTEGER},
+      </if>
+      <if test="adressid != null" >
+        #{adressid,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="keySign != null" >
+        #{keySign,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closetime != null" >
+        #{closetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couriernum != null" >
+        #{couriernum,jdbcType=VARCHAR},
+      </if>
+      <if test="couriername != null" >
+        #{couriername,jdbcType=VARCHAR},
+      </if>
+      <if test="otype != null" >
+        #{otype,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopping.shoppingmall.orderit.entity.Orderit" >
+    update orderit
+    <set >
+      <if test="orderid != null" >
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="allprice != null" >
+        allprice = #{allprice,jdbcType=INTEGER},
+      </if>
+      <if test="couponid != null" >
+        couponid = #{couponid,jdbcType=INTEGER},
+      </if>
+      <if test="zzprice != null" >
+        zzprice = #{zzprice,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postage != null" >
+        postage = #{postage,jdbcType=INTEGER},
+      </if>
+      <if test="adressid != null" >
+        adressid = #{adressid,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="keySign != null" >
+        key_sign = #{keySign,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closetime != null" >
+        closetime = #{closetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendtime != null" >
+        sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couriernum != null" >
+        couriernum = #{couriernum,jdbcType=VARCHAR},
+      </if>
+      <if test="couriername != null" >
+        couriername = #{couriername,jdbcType=VARCHAR},
+      </if>
+      <if test="otype != null" >
+        otype = #{otype,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shopping.shoppingmall.orderit.entity.Orderit" >
+    update orderit
+    set orderid = #{orderid,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      allprice = #{allprice,jdbcType=INTEGER},
+      couponid = #{couponid,jdbcType=INTEGER},
+      zzprice = #{zzprice,jdbcType=REAL},
+      status = #{status,jdbcType=INTEGER},
+      postage = #{postage,jdbcType=INTEGER},
+      adressid = #{adressid,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      key_sign = #{keySign,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      closetime = #{closetime,jdbcType=TIMESTAMP},
+      sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      couriernum = #{couriernum,jdbcType=VARCHAR},
+      couriername = #{couriername,jdbcType=VARCHAR},
+      otype = #{otype,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

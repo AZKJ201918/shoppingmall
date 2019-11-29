@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shopping.shoppingmall.homepage.dao.SlideshowMapper" >
+  <resultMap id="BaseResultMap" type="com.shopping.shoppingmall.homepage.entity.Slideshow" >
+    <id column="slid" property="slid" jdbcType="INTEGER" />
+    <result column="sname" property="sname" jdbcType="VARCHAR" />
+    <result column="simg" property="simg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    slid, sname, simg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from slideshow
+    where slid = #{slid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from slideshow
+    where slid = #{slid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shopping.shoppingmall.homepage.entity.Slideshow" >
+    insert into slideshow (slid, sname, simg
+      )
+    values (#{slid,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{simg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shopping.shoppingmall.homepage.entity.Slideshow" >
+    insert into slideshow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="slid != null" >
+        slid,
+      </if>
+      <if test="sname != null" >
+        sname,
+      </if>
+      <if test="simg != null" >
+        simg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="slid != null" >
+        #{slid,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="simg != null" >
+        #{simg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopping.shoppingmall.homepage.entity.Slideshow" >
+    update slideshow
+    <set >
+      <if test="sname != null" >
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="simg != null" >
+        simg = #{simg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where slid = #{slid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shopping.shoppingmall.homepage.entity.Slideshow" >
+    update slideshow
+    set sname = #{sname,jdbcType=VARCHAR},
+      simg = #{simg,jdbcType=VARCHAR}
+    where slid = #{slid,jdbcType=INTEGER}
+  </update>
+</mapper>

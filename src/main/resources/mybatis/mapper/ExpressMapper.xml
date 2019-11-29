@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.shoppingmall.orderit.dao.ExpressMapper">
+  <resultMap id="BaseResultMap" type="com.shopping.shoppingmall.orderit.entity.Express">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="express_num" jdbcType="VARCHAR" property="expressNum" />
+    <result column="logistic_mode" jdbcType="VARCHAR" property="logisticMode" />
+    <result column="express_company" jdbcType="VARCHAR" property="expressCompany" />
+    <result column="order_note" jdbcType="VARCHAR" property="orderNote" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_id, express_num, logistic_mode, express_company, order_note
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from express
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="selectByExpress"   resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from express
+    where order_id=#{orderid}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from express
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shopping.shoppingmall.orderit.entity.Express">
+    insert into express (id, order_id, express_num, 
+      logistic_mode, express_company, order_note
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{expressNum,jdbcType=VARCHAR}, 
+      #{logisticMode,jdbcType=VARCHAR}, #{expressCompany,jdbcType=VARCHAR}, #{orderNote,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shopping.shoppingmall.orderit.entity.Express">
+    insert into express
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="expressNum != null">
+        express_num,
+      </if>
+      <if test="logisticMode != null">
+        logistic_mode,
+      </if>
+      <if test="expressCompany != null">
+        express_company,
+      </if>
+      <if test="orderNote != null">
+        order_note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="expressNum != null">
+        #{expressNum,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticMode != null">
+        #{logisticMode,jdbcType=VARCHAR},
+      </if>
+      <if test="expressCompany != null">
+        #{expressCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNote != null">
+        #{orderNote,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopping.shoppingmall.orderit.entity.Express">
+    update express
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="expressNum != null">
+        express_num = #{expressNum,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticMode != null">
+        logistic_mode = #{logisticMode,jdbcType=VARCHAR},
+      </if>
+      <if test="expressCompany != null">
+        express_company = #{expressCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNote != null">
+        order_note = #{orderNote,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shopping.shoppingmall.orderit.entity.Express">
+    update express
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      express_num = #{expressNum,jdbcType=VARCHAR},
+      logistic_mode = #{logisticMode,jdbcType=VARCHAR},
+      express_company = #{expressCompany,jdbcType=VARCHAR},
+      order_note = #{orderNote,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
